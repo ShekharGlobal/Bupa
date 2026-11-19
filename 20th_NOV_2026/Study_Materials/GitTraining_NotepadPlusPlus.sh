@@ -1,0 +1,233 @@
+# =====================================================
+# STEP 1: INITIALIZE GIT REPOSITORY
+# =====================================================
+
+mkdir GitTraining
+cd GitTraining
+
+git init -b master
+
+# Configure Git
+git config --global user.name "shekhar"
+git config --global user.email "traininglabit@gmail.com"
+
+# Verify configuration
+git config --global --list
+
+# Create welcome.txt
+echo "Welcome to the version control" > welcome.txt
+
+# Check file contents
+cat welcome.txt
+
+# Check status
+git status
+
+# Stage and commit
+git add welcome.txt
+git commit -m "initial commit"
+
+# Connect GitHub repository
+git remote add origin https://github.com/ShekharGlobal/myrepos.git
+
+# Verify remote
+git remote -v
+
+# Push master
+git push -u origin master
+
+
+# =====================================================
+# STEP 2: CREATE BRANCH b1
+# =====================================================
+
+git checkout -b b1
+
+# Open welcome.txt in Notepad++
+"/c/Program Files/Notepad++/notepad++.exe" welcome.txt
+
+# IMPORTANT:
+# Replace the existing line with:
+# Welcome from branch b1
+#
+# Press Ctrl+S and close Notepad++.
+
+# Verify saved changes
+cat welcome.txt
+
+# Check modifications
+git status
+git diff
+
+# Stage and commit changes
+git add welcome.txt
+git commit -m "Updated welcome.txt in branch b1"
+
+# Push branch b1
+git push -u origin b1
+
+
+# =====================================================
+# STEP 3: CREATE BRANCH b2 FROM MASTER
+# =====================================================
+
+git checkout master
+
+git checkout -b b2
+
+# Open welcome.txt in Notepad++
+"/c/Program Files/Notepad++/notepad++.exe" welcome.txt
+
+# IMPORTANT:
+# Replace the existing line with:
+# Welcome from branch b2
+#
+# Press Ctrl+S and close Notepad++.
+
+# Verify changes
+cat welcome.txt
+
+git status
+git diff
+
+git add welcome.txt
+git commit -m "Updated welcome.txt in branch b2"
+
+# Push branch b2
+git push -u origin b2
+
+
+# =====================================================
+# STEP 4: VIEW BRANCHES
+# =====================================================
+
+git branch
+
+git log --oneline --graph --all
+
+
+# =====================================================
+# STEP 5: MERGE b1 INTO MASTER
+# =====================================================
+
+git checkout master
+
+git merge b1
+
+# Expected: Fast-forward merge
+
+# View merged contents
+cat welcome.txt
+
+git status
+
+
+# =====================================================
+# STEP 6: MERGE b2 INTO MASTER
+# =====================================================
+
+git merge b2
+
+# EXPECTED OUTPUT:
+#
+# Auto-merging welcome.txt
+# CONFLICT (content): Merge conflict in welcome.txt
+# Automatic merge failed; fix conflicts and
+# then commit the result.
+#
+# Git stops the merge here.
+# Resolve the conflict before continuing.
+
+
+# =====================================================
+# STEP 7: VIEW MERGE CONFLICT
+# =====================================================
+
+git status
+
+cat welcome.txt
+
+# EXPECTED FILE CONTENT:
+#
+# <<<<<<< HEAD
+# Welcome from branch b1
+# =======
+# Welcome from branch b2
+# >>>>>>> b2
+
+
+# =====================================================
+# STEP 8: RESOLVE MERGE CONFLICT
+# =====================================================
+
+"/c/Program Files/Notepad++/notepad++.exe" welcome.txt
+
+# Remove conflict markers.
+#
+# Replace the entire file content with:
+#
+# Welcome from branch b1
+# Welcome from branch b2
+#
+# Press Ctrl+S and close Notepad++.
+
+# Verify corrected file
+cat welcome.txt
+
+# Stage resolved file
+git add welcome.txt
+
+# Complete merge commit
+git commit -m "Resolved conflict between b1 and b2"
+
+
+# =====================================================
+# STEP 9: VERIFY FINAL RESULT
+# =====================================================
+
+git status
+
+git log --oneline --graph --all
+
+cat welcome.txt
+
+# Expected content:
+#
+# Welcome from branch b1
+# Welcome from branch b2
+
+
+# =====================================================
+# STEP 10: PUSH UPDATED MASTER TO GITHUB
+# =====================================================
+
+git push origin master
+
+
+# =====================================================
+# STEP 11: DELETE LOCAL BRANCHES (OPTIONAL)
+# =====================================================
+
+git branch -d b1
+git branch -d b2
+
+
+# =====================================================
+# STEP 12: DELETE REMOTE BRANCHES (OPTIONAL)
+# =====================================================
+
+git push origin --delete b1
+git push origin --delete b2
+
+
+# =====================================================
+# STEP 13: FINAL VERIFICATION
+# =====================================================
+
+git branch
+
+git status
+
+git log --oneline --graph
+
+git remote -v
